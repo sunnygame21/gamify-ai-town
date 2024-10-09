@@ -48,7 +48,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
    npm i
    ```
 
-4. **Run** the app
+4. **Add your api key:** Put it in the right place
+   https://github.com/codingtmd/gamify-ai-town/blob/main/src/app/api/rpggo/%5B...path%5D/route.js#L6
+   ![image](https://github.com/user-attachments/assets/4eece6ad-d931-405a-9bc3-118e853d2d5a)
+
+
+
+5. **Run** the app
    ```
    export NODE_OPTIONS=--openssl-legacy-provider
    ```
