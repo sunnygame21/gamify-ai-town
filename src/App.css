@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('PressStart2P-Regular.ttf') format('opentype'),
+  url('PressStart2P-Regular.ttf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.gameWrapper {
+  color: #fff;
+}
+
+.gameContentWrapper {
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+.gameContentWrapper canvas {
+  image-rendering: pixelated;
+  -ms-interpolation-mode: nearest-neighbor;
+  box-shadow: 0px 0px 0px 3px rgba(0,0,0,0.75);
+}
+
+/* width: `${width * multiplier}px`,
+    height: `${height * multiplier}px`,
+    margin: 'auto',
+    padding: 0,
+    overflow: 'hidden',
+    '& canvas': {
+      imageRendering: 'pixelated',
+      '-ms-interpolation-mode': 'nearest-neighbor',
+      boxShadow: '0px 0px 0px 3px rgba(0,0,0,0.75)',
+    }, */

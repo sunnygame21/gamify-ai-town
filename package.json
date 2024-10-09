@@ -1,0 +1,32 @@
+{
+  "name": "demo-ai-town-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.13.1",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.2",
+    "@mui/material-nextjs": "^6.1.2",
+    "axios": "^1.7.7",
+    "grid-engine": "^2.42.1",
+    "next": "14.2.14",
+    "phaser": "^3.70.0",
+    "phaser3-rex-plugins": "^1.60.8",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-if": "^4.1.5"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.2.14",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
