@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Base URL and Authorization token
 const baseURL = 'https://api.rpggo.ai/v2/open/game';
-const authorizationToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.SBkbnsTiduzwkzmVNfz3Cr-aplkLM2DizPNu5bVRxcA';  // !!!!!Replace with your real token
+const authorizationToken = '';  // !!!!!Replace with your real token
 
 function getAuthTokken() {
   if (authorizationToken !== '') {
