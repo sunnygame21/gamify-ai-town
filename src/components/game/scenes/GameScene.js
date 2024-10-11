@@ -600,25 +600,16 @@ export default class GameScene extends Scene {
         if (this.isConversationing > 0) {
           return;
         }
-        this.conversation(objB, npcsKeys);
+        this.conversationStart(objB, npcsKeys);
       }
     );
   }
 
   genPrevConversation(characterName) {
-    var currentMessage =
-      "<span style='color:yellow'>you:" +
-      getPrevAnser(characterName) +
-      "</span><br>" +
-      characterName +
-      ":" +
-      "";
-
     window.dispatchEvent(
       new CustomEvent("show-dialog", {
         detail: {
           characterName: characterName,
-          message: currentMessage,
         },
       })
     );
@@ -654,7 +645,7 @@ export default class GameScene extends Scene {
         }); */
   }
 
-  conversation(npc, npcsKeys) {
+  conversationStart(npc, npcsKeys) {
     const characterName = npc.texture.key;
     this.gridEngine.stopMovement(characterName);
     this.gridEngine.stopMovement("hero");
@@ -701,6 +692,10 @@ export default class GameScene extends Scene {
                 npc.setFrame(this.getStopFrame(this.getOppositeDirection(facingDirection), characterName));
             }
         }, 1000);  */
+  }
+
+  conversationEnd() {
+    this.isConversationing = 0;
   }
 
   updateSessionInfo(newSessionInfo) {

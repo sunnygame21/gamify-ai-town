@@ -6,7 +6,7 @@ import { GlobalContext } from "@/context/global";
 import BootScene from "@/components/game/scenes/BootScene";
 import GameScene from "@/components/game/scenes/GameScene";
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin";
-import DialogBox from "@/components/game/components/dialogModal";
+import DialogBox from "@/components/game/components/dialogBox";
 import { calculateGameSize } from "@/components/game/utils";
 import GameHint from "@/components/game/components/GameHint";
 import GameStartBox from "@/components/game/components/gameStartBox";
@@ -31,9 +31,6 @@ function Game() {
       detail: {},
     });
     window.dispatchEvent(customEvent);
-
-    setMessages([]);
-    setCharacterName("");
   }, [characterName]);
 
   useEffect(() => {
@@ -88,27 +85,23 @@ function Game() {
   }, [sessionInfo]);
 
   useEffect(() => {
-    //show dialogs event
-    const showdialogBoxEventListener = ({ detail }) => {
+    const showDialogBoxEventListener = ({ detail }) => {
+      console.log("show-dialog", detail);
       setCharacterName(detail.characterName);
-      setMessages([
-        {
-          message: detail.message,
-        },
-      ]);
     };
-    window.addEventListener("show-dialog", showdialogBoxEventListener);
-    //close dialogs event
-    const closedialogBoxEventListener = ({ detail }) => {
-      setCharacterName(detail.characterName);
-      // setMessages([]);
-      // const timer = setInterval(() => {
-      //   clearInterval(timer);
-      //   handleMessageIsDone();
-      // }, 2000);
+    window.addEventListener("show-dialog", showDialogBoxEventListener);
+
+    const closeDialogBoxEventListener = ({ detail }) => {
+      console.log("close-dialog", detail);
+      setCharacterName("");
+      gameSceneRef.current.conversationEnd();
+      const timer = setInterval(() => {
+        clearInterval(timer);
+        handleMessageIsDone();
+      }, 2000);
     };
-    window.addEventListener("close-dialog", closedialogBoxEventListener);
-    //game hint event
+    window.addEventListener("close-dialog", closeDialogBoxEventListener);
+
     const gameHintEventListener = ({ detail }) => {
       var hint = detail.hintText;
       if (hint === "") {
@@ -117,13 +110,13 @@ function Game() {
       setGameHintText(hint);
     };
     window.addEventListener("game-hint", gameHintEventListener);
-    //remove listeners
+
     return () => {
-      window.removeEventListener("show-dialog", showdialogBoxEventListener);
-      window.removeEventListener("close-dialog", closedialogBoxEventListener);
+      window.removeEventListener("show-dialog", showDialogBoxEventListener);
+      window.removeEventListener("close-dialog", closeDialogBoxEventListener);
       window.removeEventListener("game-hint", gameHintEventListener);
     };
-  }, [setCharacterName, setMessages, handleMessageIsDone]);
+  }, []);
 
   const [showStartBox, setShowStartBox] = useState(true);
 
@@ -146,10 +139,9 @@ function Game() {
           }}
           hintText={gameHintText}
         />
-        {messages.length > 0 && sessionInfo?.session_id ? (
+        {characterName && sessionInfo?.session_id ? (
           <DialogBox
             sessionInfo={sessionInfo}
-            onDone={handleMessageIsDone}
             characterName={characterName}
             messages={messages}
             gameSize={{

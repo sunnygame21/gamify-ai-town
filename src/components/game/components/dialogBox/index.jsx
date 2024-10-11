@@ -2,35 +2,28 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { addChatHistory } from "@/components/game/ChatUtils";
 import { GAME_ID } from "@/config";
-import ChatList from "../chatList";
+import ChatList from "./chatList";
 import styles from "./index.module.css";
 
 // Images
 const dialogBorderBox = "/assets/images/dialog_borderbox.png";
 
 const DialogBox = (props) => {
-  const { messages, characterName, onDone, gameSize } = props || {};
-  console.log("props", props);
+  const { sessionInfo, messages, characterName, gameSize } = props || {};
   const { width, height, multiplier } = gameSize;
   const messageBoxHeight = Math.ceil((height / 5) * multiplier);
 
-  const [currentMessage, setCurrentMessage] = useState(0);
-  const [messageEnded, setMessageEnded] = useState(false);
   const [messageText, setMessageText] = useState("");
 
-  const handleClick = useCallback(() => {
-    if (messageEnded) {
-      setMessageEnded(false);
-      if (currentMessage < messages.length - 1) {
-        setCurrentMessage(currentMessage + 1);
-      } else {
-        setCurrentMessage(0);
-        onDone();
-      }
-    } else {
-      setMessageEnded(true);
-    }
-  }, [currentMessage, messageEnded, messages.length, onDone]);
+  const handleClose = (characterName) => {
+    window.dispatchEvent(
+      new CustomEvent("close-dialog", {
+        detail: {
+          characterName: characterName,
+        },
+      })
+    );
+  };
 
   const sendMessage = () => {
     // Insert logic to start a new game, such as initializing game state or routing to the game screen
@@ -72,7 +65,10 @@ const DialogBox = (props) => {
         minHeight: `${messageBoxHeight}px`,
       }}
     >
-      <div onClick={handleClick} className={styles.dialogFooter}>
+      <div
+        onClick={() => handleClose(characterName)}
+        className={styles.dialogFooter}
+      >
         Close
       </div>
       <div
@@ -84,16 +80,7 @@ const DialogBox = (props) => {
       >
         {characterName}
       </div>
-      <ChatList
-        action={messages[currentMessage].action}
-        message={messages[currentMessage].message}
-        key={currentMessage}
-        multiplier={multiplier}
-        forceShowFullMessage={true}
-        onMessageEnded={() => {
-          setMessageEnded(true);
-        }}
-      />
+      <ChatList />
       <div className={styles.textbox}>
         <textarea
           rows={5}
