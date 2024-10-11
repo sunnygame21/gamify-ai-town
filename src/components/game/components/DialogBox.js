@@ -5,9 +5,9 @@ import {
   getPrevAnser,
   getChatHistory,
   addChatHistory,
-} from "@/game/ChatUtils";
-import { Game_Id } from "@/config";
-import Message from "./Message";
+} from "@/components/game/ChatUtils";
+import { GAME_ID } from "@/config";
+import Message from "./chatList";
 import "./dialogbox.css";
 
 // Images
@@ -49,7 +49,7 @@ const DialogBox = ({ messages, characterName, onDone, gameSize }) => {
 
       axios
         .post("/api/rpggo/chatwithnpc", {
-          game_id: Game_Id,
+          game_id: GAME_ID,
           session_id: "ses_qsv1jjiqd",
           character_id: "1aeaa765-a163-4898-b00b-c9b868e7457d",
           message: messageText,

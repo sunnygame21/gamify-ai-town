@@ -1,4 +1,4 @@
-export const Game_Id = "7411057c-43a0-4fbb-b4b8-f0b02ba3cb02";
+export const GAME_ID = "7411057c-43a0-4fbb-b4b8-f0b02ba3cb02";
 
 export const Characters = {
   npc_01: {

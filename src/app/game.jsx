@@ -1,20 +1,24 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useContext } from "react";
 import Phaser from "phaser";
 import GridEngine from "grid-engine";
-import BootScene from "@/game/scenes/BootScene";
-import GameScene from "@/game/scenes/GameScene";
+import { GlobalContext } from "@/context/global";
+import BootScene from "@/components/game/scenes/BootScene";
+import GameScene from "@/components/game/scenes/GameScene";
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin";
-import DialogBox from "@/game/components/DialogBox";
-import "@/App.css";
-import { calculateGameSize } from "@/game/utils";
-import GameHint from "@/game/components/GameHint";
-import GameStartBox from "@/game/components/gameStartBox";
+import DialogBox from "@/components/game/components/dialogModal";
+import { calculateGameSize } from "@/components/game/utils";
+import GameHint from "@/components/game/components/GameHint";
+import GameStartBox from "@/components/game/components/gameStartBox";
 import { If, Then } from "react-if";
+
+import "@/styles/App.css";
 
 const { width, height, multiplier } = calculateGameSize();
 
 function Game() {
+  const { gameInfo } = useContext(GlobalContext);
+
   const [messages, setMessages] = useState([]);
   const [characterName, setCharacterName] = useState("");
   const [gameHintText, setGameHintText] = useState(
@@ -131,7 +135,7 @@ function Game() {
           }}
           hintText={gameHintText}
         />
-        {messages.length > 0 && (
+        {messages.length > 0 && gameInfo?.sessionInfo ? (
           <DialogBox
             onDone={handleMessageIsDone}
             characterName={characterName}
@@ -142,12 +146,10 @@ function Game() {
               multiplier,
             }}
           />
-        )}
-        <If condition={showStartBox}>
-          <Then>
-            <GameStartBox setShowStartBox={setShowStartBox} />
-          </Then>
-        </If>
+        ) : null}
+        {showStartBox ? (
+          <GameStartBox setShowStartBox={setShowStartBox} />
+        ) : null}
       </div>
     </div>
   );

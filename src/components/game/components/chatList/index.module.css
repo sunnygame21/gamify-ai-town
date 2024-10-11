@@ -1,0 +1,14 @@
+.chatWrap {
+  padding: 0 10px 20px 50px;
+  flex-shrink: 0;
+  direction: ltr;
+  overflow: auto;
+  height: calc(100% - 58px - 42px);
+}
+.chatWrap::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0;
+}
+.chatWrap > div {
+  margin-top: 36px;
+}

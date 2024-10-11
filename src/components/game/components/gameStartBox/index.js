@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Game_Id } from "@/config";
+import { GAME_ID } from "@/config";
+import { GlobalContext } from "@/context/global";
 
 import styles from "./index.module.css";
 
-const defaultGameData = {
-  image: "",
-  name: "",
-  intro: "",
-  tags: [],
-};
 
-const GameStartBox = ({ gameSize, setShowStartBox }) => {
-  const [gameData, setGameData] = useState(defaultGameData);
-  const [loading, setLoading] = useState(false);
+const GameStartBox = ({ setShowStartBox }) => {
+  const { gameInfo, loading } = useContext(GlobalContext);
 
   const onStart = () => {
-    console.log("Game started");
     setShowStartBox(false);
     // Insert logic to start a new game, such as initializing game state or routing to the game screen
 
@@ -27,7 +20,7 @@ const GameStartBox = ({ gameSize, setShowStartBox }) => {
 
       axios
         .post("/api/rpggo/startgame", {
-          game_id: Game_Id,
+          game_id: GAME_ID,
           session_id: session_id,
         })
         .then((res) => {
@@ -50,7 +43,7 @@ const GameStartBox = ({ gameSize, setShowStartBox }) => {
 
       axios
         .post("/api/rpggo/resumesession", {
-          game_id: Game_Id,
+          game_id: GAME_ID,
           session_id: "ses_qsv1jjiqd",
         })
         .then((res) => {
@@ -62,31 +55,7 @@ const GameStartBox = ({ gameSize, setShowStartBox }) => {
     }
   };
 
-  const fetchGameData = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.post("/api/rpggo/gamemetadata", {
-        game_id: Game_Id,
-      });
-      const gameData = res.data.data;
-      console.log("gameData is ", gameData);
-      setGameData(gameData || defaultGameData);
-
-      // display npc avatar
-      // const npcs = gameData.chapters[0].characters;
-      // console.log("NPC Details:", npcs);
-      // loadNPCs(npcs || []);
-    } catch (error) {
-      console.error("Error fetching game data:", error);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchGameData();
-  }, []);
-
-  if (loading) {
+  if (loading || !gameInfo?.game_id) {
     return <div className={styles.wrapper}>Loading....</div>;
   }
 
@@ -94,14 +63,14 @@ const GameStartBox = ({ gameSize, setShowStartBox }) => {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.leftPanel}>
-          <img src={gameData?.image} alt={`${gameData?.name}`} />
+          <img src={gameInfo?.image} alt={`${gameInfo?.name}`} />
         </div>
         <div className={styles.rightPanel}>
-          <div className={styles.title}>{gameData?.name}</div>
-          <div className={styles.intro}>{gameData?.intro}</div>
-          {/* <div className={styles.tags}>{gameData?.tags?.join(", ")}</div> */}
+          <div className={styles.title}>{gameInfo?.name}</div>
+          <div className={styles.intro}>{gameInfo?.intro}</div>
+          {/* <div className={styles.tags}>{gameInfo?.tags?.join(", ")}</div> */}
           <div className={styles["npc-container"]}>
-            {(gameData?.chapters?.[0]?.characters || []).map((npc) => (
+            {(gameInfo?.chapters?.[0]?.characters || []).map((npc) => (
               <img
                 src={npc.avatar}
                 className={styles["npc-avatar"]}
