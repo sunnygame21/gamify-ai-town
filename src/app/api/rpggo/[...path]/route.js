@@ -3,14 +3,9 @@ import axios from 'axios';
 
 // Base URL and Authorization token
 const baseURL = 'https://api.rpggo.ai/v2/open/game';
-const authorizationToken = '';  // !!!!!Replace with your real token
 
-function getAuthTokken() {
-  if (authorizationToken !== '') {
-      return authorizationToken
-  }
-
-  return process.env.AuthToken;
+function getAuthToken() {
+  return process.env.NEXT_PUBLIC_AUTH_TOKEN;
 }
 
 const gameMetaData = async (game_id) => {
@@ -20,7 +15,7 @@ const gameMetaData = async (game_id) => {
     }, {
       headers: {
         'accept': 'application/json',
-        'Authorization': getAuthTokken(),
+        'Authorization': getAuthToken(),
         'Content-Type': 'application/json'
       }
     });
@@ -48,7 +43,7 @@ const startGame = async (game_id, session_id) => {
     }, {
       headers: {
         'accept': 'application/json',
-        'Authorization': getAuthTokken(),
+        'Authorization': getAuthToken(),
         'Content-Type': 'application/json'
       }
     });
@@ -76,7 +71,7 @@ const resumeSession = async (game_id, session_id) => {
     }, {
       headers: {
         'accept': 'application/json',
-        'Authorization': getAuthTokken(),
+        'Authorization': getAuthToken(),
         'Content-Type': 'application/json'
       }
     });
@@ -108,7 +103,7 @@ const chatWithNPC = async (game_id, session_id, character_id, message) => {
     }, {
       headers: {
         'accept': 'application/json',
-        'Authorization': getAuthTokken(),
+        'Authorization': getAuthToken(),
         'Content-Type': 'application/json'
       }
     });

@@ -101,18 +101,7 @@ const GameStartBox = ({ gameSize, setShowStartBox }) => {
   };
 
   return (
-    <div
-      className="gameStartBox"
-      style={{
-        borderImage: `url("${dialogBorderBox}") 6 / ${6 * multiplier}px ${
-          6 * multiplier
-        }px ${6 * multiplier}px ${6 * multiplier}px stretch`,
-        padding: `${8 * multiplier}px`,
-        width: `${Math.ceil(width * 0.5 * multiplier)}px`,
-        height: `${Math.ceil(height * 0.6 * multiplier)}px`,
-      }}
-    >
-      {/* Upper Panel: Game Cover Image */}
+    <div className="gameStartBox">
       <div
         className="upperPanel"
         style={{

@@ -14,5 +14,3 @@ export const Characters = {
     id: "ec2356af-78c3-4a91-ad33-f3ecfac927f1",
   },
 };
-
-export const Auth_Token = "";
