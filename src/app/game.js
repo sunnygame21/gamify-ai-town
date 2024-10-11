@@ -9,7 +9,7 @@ import DialogBox from "@/game/components/DialogBox";
 import "@/App.css";
 import { calculateGameSize } from "@/game/utils";
 import GameHint from "@/game/components/GameHint";
-import GameStartModal from "@/game/components/gameStartModal";
+import GameStartBox from "@/game/components/gameStartBox";
 import { If, Then } from "react-if";
 
 const { width, height, multiplier } = calculateGameSize();
@@ -145,10 +145,7 @@ function Game() {
         )}
         <If condition={showStartBox}>
           <Then>
-            <GameStartModal
-              setShowStartBox={setShowStartBox}
-              gameSize={{ width: 800, height: 600, multiplier: 1 }}
-            />
+            <GameStartBox setShowStartBox={setShowStartBox} />
           </Then>
         </If>
       </div>

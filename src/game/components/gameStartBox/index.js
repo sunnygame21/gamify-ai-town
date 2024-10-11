@@ -4,16 +4,14 @@ import { Game_Id } from "@/config";
 
 import styles from "./index.module.css";
 
-const GameStartModal = ({ gameSize, setShowStartBox }) => {
-  const { width, height, multiplier } = gameSize;
+const defaultGameData = {
+  image: "",
+  name: "",
+  intro: "",
+  tags: [],
+};
 
-  // State to store the game details
-  const defaultGameData = {
-    image: "",
-    name: "",
-    intro: "",
-    tags: [],
-  };
+const GameStartBox = ({ gameSize, setShowStartBox }) => {
   const [gameData, setGameData] = useState(defaultGameData);
   const [loading, setLoading] = useState(false);
 
@@ -98,12 +96,7 @@ const GameStartModal = ({ gameSize, setShowStartBox }) => {
         <div className={styles.leftPanel}>
           <img src={gameData?.image} alt={`${gameData?.name}`} />
         </div>
-        <div
-          className={styles.rightPanel}
-          style={{
-            padding: `${6 * multiplier}px`,
-          }}
-        >
+        <div className={styles.rightPanel}>
           <div className={styles.title}>{gameData?.name}</div>
           <div className={styles.intro}>{gameData?.intro}</div>
           {/* <div className={styles.tags}>{gameData?.tags?.join(", ")}</div> */}
@@ -127,4 +120,4 @@ const GameStartModal = ({ gameSize, setShowStartBox }) => {
   );
 };
 
-export default GameStartModal;
+export default GameStartBox;
