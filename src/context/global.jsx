@@ -4,13 +4,17 @@ import axios from "axios";
 
 export const initialGlobalState = {
   gameInfo: {},
+  sessionInfo: {},
   loading: false,
+  startGame: () => {},
+  resumeGame: () => {},
 };
 
 export const GlobalContext = createContext(initialGlobalState);
 
 export const GlobalProvider = ({ children }) => {
   const [gameInfo, setGameInfo] = useState(null);
+  const [sessionInfo, setSessionInfo] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const fetchGame = async () => {
@@ -28,6 +32,48 @@ export const GlobalProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const startGame = () => {
+    try {
+      const session_id = "ses_" + Math.random().toString(36).substr(2, 9);
+      console.log("Starting new game with session_id:", session_id); // For debugging
+      axios
+        .post("/api/rpggo/startgame", {
+          game_id: GAME_ID,
+          session_id: session_id,
+        })
+        .then((res) => {
+          const sessionData = res.data.data;
+          console.log("Game Start:", sessionData);
+          setSessionInfo({
+            ...sessionData,
+            session_id,
+          });
+        });
+    } catch (error) {
+      console.error("Error starting game:", error);
+    }
+  };
+
+  const resumeGame = () => {
+    try {
+      const session_id = "ses_" + Math.random().toString(36).substr(2, 9);
+
+      console.log("Resuming game with session_id:", session_id); // For debugging
+
+      axios
+        .post("/api/rpggo/resumesession", {
+          game_id: GAME_ID,
+          session_id: "ses_qsv1jjiqd",
+        })
+        .then((res) => {
+          const startGameData = res;
+          console.log("Game Started:", startGameData);
+        });
+    } catch (error) {
+      console.error("Error starting game:", error);
+    }
+  };
+
   useEffect(() => {
     fetchGame();
   }, []);
@@ -35,9 +81,12 @@ export const GlobalProvider = ({ children }) => {
   const globalValue = useMemo(
     () => ({
       gameInfo,
+      sessionInfo,
       loading,
+      startGame,
+      resumeGame,
     }),
-    [JSON.stringify(gameInfo), loading]
+    [JSON.stringify(gameInfo), JSON.stringify(sessionInfo), loading]
   );
 
   return (

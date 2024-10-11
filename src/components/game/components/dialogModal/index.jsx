@@ -8,7 +8,9 @@ import styles from "./index.module.css";
 // Images
 const dialogBorderBox = "/assets/images/dialog_borderbox.png";
 
-const DialogBox = ({ messages, characterName, onDone, gameSize }) => {
+const DialogBox = (props) => {
+  const { messages, characterName, onDone, gameSize } = props || {};
+  console.log("props", props);
   const { width, height, multiplier } = gameSize;
   const messageBoxHeight = Math.ceil((height / 5) * multiplier);
 
@@ -29,7 +31,6 @@ const DialogBox = ({ messages, characterName, onDone, gameSize }) => {
       setMessageEnded(true);
     }
   }, [currentMessage, messageEnded, messages.length, onDone]);
-
 
   const sendMessage = () => {
     // Insert logic to start a new game, such as initializing game state or routing to the game screen
@@ -55,7 +56,6 @@ const DialogBox = ({ messages, characterName, onDone, gameSize }) => {
     } catch (error) {
       console.error("Error starting game:", error);
     }
-
   };
 
   return (

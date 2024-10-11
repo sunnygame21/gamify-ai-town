@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState, useContext } from "react";
+import { useCallback, useEffect, useState, useContext, useRef } from "react";
 import Phaser from "phaser";
 import GridEngine from "grid-engine";
 import { GlobalContext } from "@/context/global";
@@ -10,14 +10,15 @@ import DialogBox from "@/components/game/components/dialogModal";
 import { calculateGameSize } from "@/components/game/utils";
 import GameHint from "@/components/game/components/GameHint";
 import GameStartBox from "@/components/game/components/gameStartBox";
-import { If, Then } from "react-if";
 
 import "@/styles/App.css";
 
 const { width, height, multiplier } = calculateGameSize();
 
 function Game() {
-  const { gameInfo } = useContext(GlobalContext);
+  const { gameInfo, sessionInfo } = useContext(GlobalContext);
+  const gameSceneRef = useRef(null);
+  const gameRef = useRef(null);
 
   const [messages, setMessages] = useState([]);
   const [characterName, setCharacterName] = useState("");
@@ -36,45 +37,55 @@ function Game() {
   }, [characterName]);
 
   useEffect(() => {
-    const game = new Phaser.Game({
-      type: Phaser.AUTO,
-      title: "ai-town",
-      parent: "game-content",
-      orientation: Phaser.Scale.LANDSCAPE,
-      localStorageName: "ai-town",
-      width,
-      height,
-      autoRound: true,
-      pixelArt: true,
-      scale: {
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        mode: Phaser.Scale.ENVELOP,
-      },
-      scene: [BootScene, GameScene],
-      physics: {
-        default: "arcade",
-      },
-      dom: {
-        createContainer: true,
-      },
-      plugins: {
-        scene: [
-          {
-            key: "gridEngine",
-            plugin: GridEngine,
-            mapping: "gridEngine",
-          },
-          {
-            key: "rexUI",
-            plugin: RexUIPlugin,
-            mapping: "rexUI",
-          },
-        ],
-      },
-      backgroundColor: "#000000",
-    });
-    window.phaserGame = game;
+    if (!gameRef.current) {
+      gameSceneRef.current = new GameScene({ sessionInfo });
+
+      gameRef.current = new Phaser.Game({
+        type: Phaser.AUTO,
+        title: "ai-town",
+        parent: "game-content",
+        orientation: Phaser.Scale.LANDSCAPE,
+        localStorageName: "ai-town",
+        width,
+        height,
+        autoRound: true,
+        pixelArt: true,
+        scale: {
+          autoCenter: Phaser.Scale.CENTER_BOTH,
+          mode: Phaser.Scale.ENVELOP,
+        },
+        scene: [BootScene, gameSceneRef.current],
+        physics: {
+          default: "arcade",
+        },
+        dom: {
+          createContainer: true,
+        },
+        plugins: {
+          scene: [
+            {
+              key: "gridEngine",
+              plugin: GridEngine,
+              mapping: "gridEngine",
+            },
+            {
+              key: "rexUI",
+              plugin: RexUIPlugin,
+              mapping: "rexUI",
+            },
+          ],
+        },
+        backgroundColor: "#000000",
+      });
+      window.phaserGame = gameRef.current;
+    }
   }, []);
+
+  useEffect(() => {
+    if (gameSceneRef.current) {
+      gameSceneRef.current.updateSessionInfo(sessionInfo);
+    }
+  }, [sessionInfo]);
 
   useEffect(() => {
     //show dialogs event
@@ -135,8 +146,9 @@ function Game() {
           }}
           hintText={gameHintText}
         />
-        {messages.length > 0 && gameInfo?.sessionInfo ? (
+        {messages.length > 0 && sessionInfo?.session_id ? (
           <DialogBox
+            sessionInfo={sessionInfo}
             onDone={handleMessageIsDone}
             characterName={characterName}
             messages={messages}

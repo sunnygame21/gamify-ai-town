@@ -12,8 +12,9 @@ import ModelDialog from "../components/ModelDialog";
 var topic = "天气";
 
 export default class GameScene extends Scene {
-  constructor() {
+  constructor({ sessionInfo }) {
     super("GameScene");
+    this.sessionInfo = sessionInfo;
   }
 
   cursors = {};
@@ -211,6 +212,8 @@ export default class GameScene extends Scene {
     camera.fadeIn(SCENE_FADE_TIME);
 
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.canMove = false;
+
     this.input.on("gameobjectdown", (pointer, gameObject) => {
       this.updateGameHint(gameObject.name);
     });
@@ -700,20 +703,32 @@ export default class GameScene extends Scene {
         }, 1000);  */
   }
 
+  updateSessionInfo(newSessionInfo) {
+    this.sessionInfo = newSessionInfo;
+    if (this.sessionInfo && this.sessionInfo.session_id) {
+      this.canMove = true;
+    } else {
+      this.canMove = false;
+    }
+  }
+
   update() {
     if (this.isTeleporting) {
       return;
     }
 
     this.heroActionCollider.update();
-    if (this.cursors.left.isDown) {
-      this.gridEngine.move("hero", "left");
-    } else if (this.cursors.right.isDown) {
-      this.gridEngine.move("hero", "right");
-    } else if (this.cursors.up.isDown) {
-      this.gridEngine.move("hero", "up");
-    } else if (this.cursors.down.isDown) {
-      this.gridEngine.move("hero", "down");
+
+    if (this.canMove) {
+      if (this.cursors.left?.isDown) {
+        this.gridEngine.move("hero", "left");
+      } else if (this.cursors.right?.isDown) {
+        this.gridEngine.move("hero", "right");
+      } else if (this.cursors.up?.isDown) {
+        this.gridEngine.move("hero", "up");
+      } else if (this.cursors.down?.isDown) {
+        this.gridEngine.move("hero", "down");
+      }
     }
   }
 }
