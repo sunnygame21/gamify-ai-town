@@ -1,26 +1,25 @@
-'use client';
-import { useCallback, useEffect, useState } from 'react';
-import Phaser from 'phaser';
-import GridEngine from 'grid-engine';
-import BootScene from '@/game/scenes/BootScene';
-import GameScene from '@/game/scenes/GameScene';
-import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin'
+"use client";
+import { useCallback, useEffect, useState } from "react";
+import Phaser from "phaser";
+import GridEngine from "grid-engine";
+import BootScene from "@/game/scenes/BootScene";
+import GameScene from "@/game/scenes/GameScene";
+import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin";
 import DialogBox from "@/game/components/DialogBox";
-import '@/App.css';
+import "@/App.css";
 import { calculateGameSize } from "@/game/utils";
 import GameHint from "@/game/components/GameHint";
-import GameStartBox from '@/game/components/GameStartBox';
-import { If, Then } from 'react-if';
+import GameStartBox from "@/game/components/GameStartBox";
+import { If, Then } from "react-if";
 
 const { width, height, multiplier } = calculateGameSize();
 
 function Game() {
   const [messages, setMessages] = useState([]);
-  const [characterName, setCharacterName] = useState('');
-  const [gameHintText, setGameHintText] = useState("https://github.com/RPGGO-AI/demo-ai-town");
-
-  // hardcode the game id for demo
-  const game_id = '7411057c-43a0-4fbb-b4b8-f0b02ba3cb02';
+  const [characterName, setCharacterName] = useState("");
+  const [gameHintText, setGameHintText] = useState(
+    "https://github.com/RPGGO-AI/demo-ai-town"
+  );
 
   const handleMessageIsDone = useCallback(() => {
     const customEvent = new CustomEvent(`${characterName}-dialog-finished`, {
@@ -29,16 +28,16 @@ function Game() {
     window.dispatchEvent(customEvent);
 
     setMessages([]);
-    setCharacterName('');
+    setCharacterName("");
   }, [characterName]);
 
   useEffect(() => {
     const game = new Phaser.Game({
       type: Phaser.AUTO,
-      title: 'ai-town',
-      parent: 'game-content',
+      title: "ai-town",
+      parent: "game-content",
       orientation: Phaser.Scale.LANDSCAPE,
-      localStorageName: 'ai-town',
+      localStorageName: "ai-town",
       width,
       height,
       autoRound: true,
@@ -47,31 +46,28 @@ function Game() {
         autoCenter: Phaser.Scale.CENTER_BOTH,
         mode: Phaser.Scale.ENVELOP,
       },
-      scene: [
-        BootScene,
-        GameScene,
-      ],
+      scene: [BootScene, GameScene],
       physics: {
-        default: 'arcade',
+        default: "arcade",
       },
       dom: {
-        createContainer: true
+        createContainer: true,
       },
       plugins: {
         scene: [
           {
-            key: 'gridEngine',
+            key: "gridEngine",
             plugin: GridEngine,
-            mapping: 'gridEngine',
+            mapping: "gridEngine",
           },
           {
-            key: 'rexUI',
+            key: "rexUI",
             plugin: RexUIPlugin,
-            mapping: 'rexUI'
-          }
+            mapping: "rexUI",
+          },
         ],
       },
-      backgroundColor: '#000000',
+      backgroundColor: "#000000",
     });
     window.phaserGame = game;
   }, []);
@@ -80,11 +76,13 @@ function Game() {
     //show dialogs event
     const showdialogBoxEventListener = ({ detail }) => {
       setCharacterName(detail.characterName);
-      setMessages([{
-        "message": detail.message
-      }]);
+      setMessages([
+        {
+          message: detail.message,
+        },
+      ]);
     };
-    window.addEventListener('show-dialog', showdialogBoxEventListener);
+    window.addEventListener("show-dialog", showdialogBoxEventListener);
     //close dialogs event
     const closedialogBoxEventListener = ({ detail }) => {
       setCharacterName(detail.characterName);
@@ -94,7 +92,7 @@ function Game() {
       //   handleMessageIsDone();
       // }, 2000);
     };
-    window.addEventListener('close-dialog', closedialogBoxEventListener);
+    window.addEventListener("close-dialog", closedialogBoxEventListener);
     //game hint event
     const gameHintEventListener = ({ detail }) => {
       var hint = detail.hintText;
@@ -103,12 +101,12 @@ function Game() {
       }
       setGameHintText(hint);
     };
-    window.addEventListener('game-hint', gameHintEventListener);
+    window.addEventListener("game-hint", gameHintEventListener);
     //remove listeners
     return () => {
-      window.removeEventListener('show-dialog', showdialogBoxEventListener);
-      window.removeEventListener('close-dialog', closedialogBoxEventListener);
-      window.removeEventListener('game-hint', gameHintEventListener);
+      window.removeEventListener("show-dialog", showdialogBoxEventListener);
+      window.removeEventListener("close-dialog", closedialogBoxEventListener);
+      window.removeEventListener("game-hint", gameHintEventListener);
     };
   }, [setCharacterName, setMessages, handleMessageIsDone]);
 
@@ -116,16 +114,15 @@ function Game() {
 
   return (
     <div>
-      <div className='gameWrapper'>
+      <div className="gameWrapper">
         <div
           id="game-content"
-          className='gameContentWrapper'
+          className="gameContentWrapper"
           style={{
             width: `${width * multiplier}px`,
             height: `${height * multiplier}px`,
           }}
-        >
-        </div>
+        ></div>
         <GameHint
           gameSize={{
             width,
@@ -148,8 +145,7 @@ function Game() {
         )}
         <If condition={showStartBox}>
           <Then>
-            <GameStartBox 
-              game_id={game_id}
+            <GameStartBox
               setShowStartBox={setShowStartBox}
               gameSize={{ width: 800, height: 600, multiplier: 1 }}
             />
@@ -161,4 +157,3 @@ function Game() {
 }
 
 export default Game;
-
