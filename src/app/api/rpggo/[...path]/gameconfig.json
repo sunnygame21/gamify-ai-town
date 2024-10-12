@@ -1,25 +1,17 @@
 {
-    "game_id": "7411057c-43a0-4fbb-b4b8-f0b02ba3cb02",
-    "characters": {
-        "npc_01": {
-            "name": "Kristen Laika",
-            "id": "1aeaa765-a163-4898-b00b-c9b868e7457d",
-            "avatar": "https://storage.googleapis.com/rpggo-game/rpggo-creator/4bf0b6d2-78f8-4fc9-9e83-2e3a737d7cc5/bf246d63-dda3-4e43-bcc0-bbf95a8b885b"
-        },
-        "npc_02": {
-            "name": "Francis and Doreen Rutger",
-            "id": "8a1244ee-7a19-421f-992e-9a7843dc2cf3",
-            "avatar": "https://storage.googleapis.com/rpggo-game/rpggo-creator/8e1d57ad-7ff9-4228-bdc4-5032538bc52b/0c2cf420-9255-40cd-873e-876dca478130"
-        },
-        "npc_03": {
-            "name": "Dr. Jeremiah Ante",
-            "id": "4d8ac888-1997-4671-b0a9-88c530a3f79d",
-            "avatar": "https://storage.googleapis.com/rpggo-game/rpggo-creator/7e9cc8c1-9973-4fd5-ae54-ed8de597f027/fe8ed1dc-f03f-4dc0-8a54-707f91dbf748"
-        },
-        "npc_04": {
-            "name": "Caroline Darville",
-            "id": "ec2356af-78c3-4a91-ad33-f3ecfac927f1",
-            "avatar": "https://storage.googleapis.com/rpggo-game/rpggo-creator/520b7135-67a6-43ac-b5b6-f2c96c110570/cc80f851-059f-4593-8956-f3fa852c90c1"
-        }
+  "game_id": "7411057c-43a0-4fbb-b4b8-f0b02ba3cb02",
+  "characters": {
+    "npc_01": {
+      "id": "1aeaa765-a163-4898-b00b-c9b868e7457d"
+    },
+    "npc_02": {
+      "id": "8a1244ee-7a19-421f-992e-9a7843dc2cf3"
+    },
+    "npc_03": {
+      "id": "4d8ac888-1997-4671-b0a9-88c530a3f79d"
+    },
+    "npc_04": {
+      "id": "ec2356af-78c3-4a91-ad33-f3ecfac927f1"
     }
+  }
 }

@@ -1,0 +1,36 @@
+.textbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.textbox textarea {
+  height: 30px;
+  line-height: 30px;
+  width: 100%;
+  padding: 0 4px;
+  resize: none;
+  background-color: #ebddcf;
+  border-radius: 4px;
+}
+
+.textbox .btnbox {
+  margin-left: 10px;
+  display: flex;
+  justify-content: end;
+}
+
+.textbox .btnbox button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  border-radius: 15px;
+  height: 30px;
+  padding: 4px;
+  background-color: #333;
+  color: #fff;
+  line-height: 30px;
+  font-weight: 700;
+  cursor: pointer;
+}

@@ -1,0 +1,37 @@
+.dialogBox {
+  image-rendering: pixelated;
+  /* font-family: 'Press Start 2P'; */
+  background-color: #e2b27e;
+  border: solid;
+  font-size: 10px;
+  color: #333;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.dialogFooter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.dialogFooter svg {
+  height: 10px;
+  width: 10px;
+}
+
+.dialogFooter:hover {
+  opacity: 0.7;
+}
+
+.characterName {
+  font-size: 12px;
+  font-weight: 700;
+}

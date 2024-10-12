@@ -1,0 +1,30 @@
+.chatWrap {
+  padding: 10px 0;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.picture {
+  width: 150px;
+  height: 240px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.chatList {
+  margin-left: 10px;
+  flex: 1;
+  height: 100%;
+  direction: ltr;
+  overflow: auto;
+  max-height: 240px;
+}
+
+.chatList::-webkit-scrollbar {
+  background-color: transparent;
+  width: 0;
+}
