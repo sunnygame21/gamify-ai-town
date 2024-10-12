@@ -127,8 +127,8 @@ function Game() {
           id="game-content"
           className="gameContentWrapper"
           style={{
-            width: `${width * multiplier}px`,
-            height: `${height * multiplier}px`,
+            // width: `${width * multiplier}px`,
+            // height: `${height * multiplier}px`,
           }}
         ></div>
         <GameHint

@@ -726,16 +726,16 @@ export default class GameScene extends Scene {
 
     this.heroActionCollider.update();
 
-    if (this.canMove) {
-      if (this.cursors.left?.isDown) {
-        this.gridEngine.move("hero", "left");
-      } else if (this.cursors.right?.isDown) {
-        this.gridEngine.move("hero", "right");
-      } else if (this.cursors.up?.isDown) {
-        this.gridEngine.move("hero", "up");
-      } else if (this.cursors.down?.isDown) {
-        this.gridEngine.move("hero", "down");
-      }
+    // if (this.canMove) {
+    if (this.cursors.left?.isDown) {
+      this.gridEngine.move("hero", "left");
+    } else if (this.cursors.right?.isDown) {
+      this.gridEngine.move("hero", "right");
+    } else if (this.cursors.up?.isDown) {
+      this.gridEngine.move("hero", "up");
+    } else if (this.cursors.down?.isDown) {
+      this.gridEngine.move("hero", "down");
     }
+    // }
   }
 }
