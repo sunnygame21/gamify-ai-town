@@ -23,9 +23,6 @@ export const ReceiveItem = ({ message, npc }) => {
 export const LoadingItem = ({ npc }) => {
   return (
     <div className={styles.npcSendContent}>
-      <div className={styles.npcSendTop}>
-        <p>Loading</p>
-      </div>
       <div className={styles.loading}>
         <TextLoading />
       </div>

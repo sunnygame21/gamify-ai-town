@@ -652,6 +652,7 @@ export default class GameScene extends Scene {
     if (this.gridEngine.isMoving(characterName)) {
       return;
     }
+    this.isConversationEnd = false;
     this.isConversationing = 1;
     this.conversationTurn = 0;
     console.log("conversation with " + characterName);
@@ -695,7 +696,7 @@ export default class GameScene extends Scene {
   }
 
   conversationEnd() {
-    this.isConversationing = 0;
+    // this.isConversationEnd = true;
   }
 
   updateSessionInfo(newSessionInfo) {

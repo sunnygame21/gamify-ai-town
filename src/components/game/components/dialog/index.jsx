@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { find, findIndex, takeRight, findLast } from "lodash";
 import store from "store";
 import { Characters } from "@/config";
+import { CloseIcon } from "@/components/common/Icons";
 import ChatList from "./chatList";
 import { CHAT_TYPE } from "./const";
 import SendChat from "./send";
@@ -26,6 +27,8 @@ const DialogBox = (props) => {
 
   const curChapter = sessionInfo?.chapter;
   const npcId = Characters[characterName]?.id;
+  const npcInfo = find(sessionInfo?.chapter?.characters, { id: npcId });
+
   const [chatMessageList, setChatMessageList] = useState([]);
   const [picture, setPicture] = useState(image);
   const [gameEnd, setGameEnd] = useState(false);
@@ -33,19 +36,15 @@ const DialogBox = (props) => {
   const scrollToBottom = () => {
     if (!chatBoxObserver) {
       const targetNode = document.getElementById(CHAT_ID);
-      // 观察器的配置（需要观察什么变动）
       const config = { attributes: true, childList: true, subtree: true };
       const callback = (mutationsList, observer) => {
         for (let mutation of mutationsList) {
-          // console.log("A child node has been added or removed.");
           if (mutation.type === "childList") {
             targetNode?.scrollTo(0, targetNode?.scrollHeight);
           }
         }
       };
-      // 创建一个观察器实例并传入回调函数
       chatBoxObserver = new MutationObserver(callback);
-      // 以上述配置开始观察目标节点
       chatBoxObserver.observe(targetNode, config);
     }
   };
@@ -68,7 +67,7 @@ const DialogBox = (props) => {
   const updateLocalStorageMsg = (msg) => {
     localStorageMsg = msg;
     if (game_id) {
-      const storeKey = `rpa_${game_id}`;
+      const storeKey = `rpa_${game_id}_${session_id}`;
       try {
         store.set(storeKey, {
           game_id,
@@ -98,7 +97,7 @@ const DialogBox = (props) => {
           chatKey,
           chatList: [send, loading],
           chapter: curChapter?.chapter_id,
-        }
+        };
         cacheMsg.push(chat);
         localStorageMsg.push(chat);
         break;
@@ -190,7 +189,7 @@ const DialogBox = (props) => {
 
   useEffect(() => {
     if (session_id && game_id) {
-      const storeKey = `rpa_${game_id}`;
+      const storeKey = `rpa_${game_id}_${session_id}`;
       const storeData = store.get(storeKey);
       if (storeData) {
         // 继续游戏，读取缓存
@@ -205,6 +204,14 @@ const DialogBox = (props) => {
       } else {
         // 开始新游戏，初始化章节
         updateLocalStorageMsg([]);
+        const initDialog = sessionInfo?.chapter?.init_dialog || [];
+        const firstDialog =
+          find(initDialog, { character_id: npcId }) || initDialog?.[0];
+        console.log(firstDialog);
+        updateChatList({
+          type: CHAT_TYPE.receive,
+          data: firstDialog?.message,
+        });
       }
     }
   }, [session_id, game_id, npcId]);
@@ -225,7 +232,6 @@ const DialogBox = (props) => {
         top: `${Math.ceil(
           height * multiplier - (messageBoxHeight + messageBoxHeight * 0.4)
         )}px`,
-        width: `${Math.ceil(width * 0.5 * multiplier)}px`,
         minHeight: `${messageBoxHeight}px`,
       }}
     >
@@ -233,16 +239,10 @@ const DialogBox = (props) => {
         onClick={() => handleClose(characterName)}
         className={styles.dialogFooter}
       >
-        Close
+        <CloseIcon />
       </div>
-      <div
-        className={styles.characterName}
-        style={{
-          marginBottom: `${6 * multiplier}px`,
-          fontWeight: "bold",
-        }}
-      >
-        {characterName}
+      <div className={styles.characterName}>
+        {npcInfo?.name || characterName}
       </div>
       <ChatList
         chatMessageList={chatMessageList}

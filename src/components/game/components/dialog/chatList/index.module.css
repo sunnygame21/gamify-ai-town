@@ -1,22 +1,27 @@
 .chatWrap {
-  padding: 0 10px 20px 50px;
+  padding: 10px 0;
   flex-shrink: 0;
-  height: calc(100% - 58px - 42px);
   display: flex;
-}
-.chatWrap > div {
-  margin-top: 36px;
 }
 
 .picture {
-  width: 20%;
+  width: 150px;
+  height: 240px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .chatList {
+  margin-left: 10px;
   flex: 1;
   height: 100%;
   direction: ltr;
   overflow: auto;
-  max-height: 200px;
+  max-height: 240px;
 }
 
 .chatList::-webkit-scrollbar {

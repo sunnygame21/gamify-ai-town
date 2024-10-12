@@ -1,16 +1,16 @@
 .sendItemWrap {
+  margin-top: 6px;
   display: flex;
   flex-direction: row-reverse;
   width: 100%;
 }
 
 .sendContent {
-  padding: 10px 16px 6px 16px;
-  border-radius: 10px;
-  background-color: #fbfdff;
+  padding: 4px;
+  border-radius: 4px;
   white-space: pre-wrap;
-  margin-left: 40px;
-  font-size: 14px;
+  margin-left: 10px;
+  background: rgba(248, 241, 242, 1);
 }
 
 .loadingWrap,
@@ -35,19 +35,16 @@
 }
 
 .loading {
-  margin: 8px 0 0 38px;
+  margin: 6px 10px 6px 0;
 }
 .npcText {
-  margin: 8px 0 0 38px;
+  margin-right: 10px;
   white-space: pre-wrap;
-  padding: 10px 16px 6px 16px;
-  background: rgba(248, 241, 242, 1);
-  border-radius: 10px;
-  color: #000;
-  font-family: Friz;
-  font-size: 14px;
+  padding: 4px;
+  border-radius: 4px;
   font-weight: 500;
   max-width: 450px;
+  background: rgba(248, 241, 242, 1);
 }
 
 .pictureWrap {

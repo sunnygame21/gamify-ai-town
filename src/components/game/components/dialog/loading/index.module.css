@@ -23,14 +23,14 @@
 }
 
 .loading {
-  width: 54px;
-  height: 18px;
+  width: 50px;
+  /* height: 18px; */
 }
 
 .loading > div {
-  width: 8px;
-  height: 8px;
-  margin: 4px;
+  width: 6px;
+  height: 6px;
+  margin: 3px;
   border-radius: 100%;
   animation: ball-beat 0.7s -0.15s infinite linear;
 }

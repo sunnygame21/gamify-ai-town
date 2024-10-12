@@ -6,7 +6,7 @@ import { GlobalContext } from "@/context/global";
 import BootScene from "@/components/game/scenes/BootScene";
 import GameScene from "@/components/game/scenes/GameScene";
 import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin";
-import DialogBox from "@/components/game/components/dialogBox";
+import DialogBox from "@/components/game/components/dialog";
 import { calculateGameSize } from "@/components/game/utils";
 import GameHint from "@/components/game/components/GameHint";
 import GameStartBox from "@/components/game/components/gameStartBox";
