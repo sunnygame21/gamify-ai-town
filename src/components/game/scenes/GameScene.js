@@ -652,7 +652,6 @@ export default class GameScene extends Scene {
     if (this.gridEngine.isMoving(characterName)) {
       return;
     }
-    this.isConversationEnd = false;
     this.isConversationing = 1;
     this.conversationTurn = 0;
     console.log("conversation with " + characterName);
@@ -695,8 +694,20 @@ export default class GameScene extends Scene {
         }, 1000);  */
   }
 
-  conversationEnd() {
-    // this.isConversationEnd = true;
+  conversationEnd(characterName) {
+    const facingDirection = this.gridEngine.getFacingDirection(characterName);
+    const direction = this.getOppositeDirection(facingDirection);
+    this.gridEngine.move(characterName, direction);
+    this.gridEngine.move(characterName, direction);
+    this.gridEngine.move("hero", facingDirection);
+    this.gridEngine.move("hero", facingDirection);
+    this.gridEngine.move("hero", facingDirection);
+
+    this.time.delayedCall(3000, () => {
+      console.log("conversation end");
+      this.isConversationing = 0;
+      this.updateGameHint(" ");
+    });
   }
 
   updateSessionInfo(newSessionInfo) {
@@ -715,16 +726,16 @@ export default class GameScene extends Scene {
 
     this.heroActionCollider.update();
 
-    if (this.canMove) {
-      if (this.cursors.left?.isDown) {
-        this.gridEngine.move("hero", "left");
-      } else if (this.cursors.right?.isDown) {
-        this.gridEngine.move("hero", "right");
-      } else if (this.cursors.up?.isDown) {
-        this.gridEngine.move("hero", "up");
-      } else if (this.cursors.down?.isDown) {
-        this.gridEngine.move("hero", "down");
-      }
+    // if (this.canMove) {
+    if (this.cursors.left?.isDown) {
+      this.gridEngine.move("hero", "left");
+    } else if (this.cursors.right?.isDown) {
+      this.gridEngine.move("hero", "right");
+    } else if (this.cursors.up?.isDown) {
+      this.gridEngine.move("hero", "up");
+    } else if (this.cursors.down?.isDown) {
+      this.gridEngine.move("hero", "down");
     }
+    // }
   }
 }

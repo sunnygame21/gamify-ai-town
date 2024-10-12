@@ -94,7 +94,7 @@ function Game() {
     const closeDialogBoxEventListener = ({ detail }) => {
       console.log("close-dialog", detail);
       setCharacterName("");
-      gameSceneRef.current.conversationEnd();
+      gameSceneRef.current.conversationEnd(detail?.characterName);
       const timer = setInterval(() => {
         clearInterval(timer);
         handleMessageIsDone();
@@ -127,8 +127,8 @@ function Game() {
           id="game-content"
           className="gameContentWrapper"
           style={{
-            width: `${width * multiplier}px`,
-            height: `${height * multiplier}px`,
+            // width: `${width * multiplier}px`,
+            // height: `${height * multiplier}px`,
           }}
         ></div>
         <GameHint
