@@ -232,12 +232,9 @@ const DialogBox = (props) => {
     <div
       className={styles.dialogBox}
       style={{
-        borderImage: `url("${dialogBorderBox}") 6 / ${6 * multiplier}px ${
-          6 * multiplier
-        }px ${6 * multiplier}px ${6 * multiplier}px stretch`,
-        top: `${Math.ceil(
-          height * multiplier - (messageBoxHeight + messageBoxHeight * 0.4)
-        )}px`,
+        // borderImage: `url("${dialogBorderBox}") 6 / ${6 * multiplier}px ${
+        //   6 * multiplier
+        // }px ${6 * multiplier}px ${6 * multiplier}px stretch`,
         minHeight: `${messageBoxHeight}px`,
       }}
     >
