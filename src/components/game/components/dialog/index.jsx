@@ -28,9 +28,10 @@ const DialogBox = (props) => {
   const curChapter = sessionInfo?.chapter;
   const npcId = Characters[characterName]?.id;
   const npcInfo = find(sessionInfo?.chapter?.characters, { id: npcId });
+  console.log("npcInfo", npcInfo);
 
   const [chatMessageList, setChatMessageList] = useState([]);
-  const [picture, setPicture] = useState(image);
+  const [picture, setPicture] = useState(npcInfo?.avatar || image);
   const [gameEnd, setGameEnd] = useState(false);
 
   const scrollToBottom = () => {
@@ -81,6 +82,14 @@ const DialogBox = (props) => {
   const updateChatList = (params) => {
     const { type, data = {}, chatKey } = params;
     switch (type) {
+      case CHAT_TYPE.gameInit:
+        const gameInit = {
+          value: data,
+          type: CHAT_TYPE.gameInit,
+        };
+        cacheMsg.push(gameInit);
+        localStorageMsg.push(gameInit);
+        break;
       case CHAT_TYPE.loading:
         setReceiveLoadingFalse(chatKey);
         break;
@@ -204,13 +213,10 @@ const DialogBox = (props) => {
       } else {
         // 开始新游戏，初始化章节
         updateLocalStorageMsg([]);
-        const initDialog = sessionInfo?.chapter?.init_dialog || [];
-        const firstDialog =
-          find(initDialog, { character_id: npcId }) || initDialog?.[0];
-        console.log(firstDialog);
+
         updateChatList({
-          type: CHAT_TYPE.receive,
-          data: firstDialog?.message,
+          type: CHAT_TYPE.gameInit,
+          data: sessionInfo?.chapter?.goal_info?.goal_displayed,
         });
       }
     }

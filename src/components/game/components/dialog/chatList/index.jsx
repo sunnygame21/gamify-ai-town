@@ -9,8 +9,9 @@ const CHAT_ID = "CHAT_BOX";
 const ChatList = ({ chatMessageList = [], picture = "", npcId = "" }) => {
   const messageList = chatMessageList.filter((message) => {
     const id = message?.chatKey?.split("/")?.[1];
-    return npcId === id;
+    return npcId === id || message?.type === CHAT_TYPE.gameInit;
   });
+
   return (
     <div className={styles.chatWrap}>
       <div className={styles.picture}>
@@ -36,7 +37,10 @@ const ChatList = ({ chatMessageList = [], picture = "", npcId = "" }) => {
             });
           }
 
-          if (message?.type === CHAT_TYPE.receive) {
+          if (
+            message?.type === CHAT_TYPE.receive ||
+            message?.type === CHAT_TYPE.gameInit
+          ) {
             return (
               <ReceiveItem key={`chat-extra-receive-${i}`} message={message} />
             );

@@ -24,11 +24,11 @@ const SendChat = (props) => {
     msg_index++;
     updateChatList({
       type: CHAT_TYPE.send,
-      data: {value: messageText},
+      data: { value: messageText },
       chatKey,
     });
+    setMessageText("");
     await sendMessage(chatKey);
-    setMessageText('');
   };
 
   const handleChangeChapter = async (chapter_id) => {
@@ -59,7 +59,6 @@ const SendChat = (props) => {
       console.log("handleChangeChapter", error);
     }
   };
-
 
   const sendMessage = async (chatKey) => {
     // Insert logic to start a new game, such as initializing game state or routing to the game screen
@@ -133,6 +132,12 @@ const SendChat = (props) => {
         rows={5}
         value={messageText}
         onChange={(e) => setMessageText(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.keyCode === 13) {
+            handleSend(e);
+          }
+        }}
+        placeholder="Send a message..."
       ></textarea>
       <div className={styles.btnbox}>
         <button onClick={throttle(handleSend, 500)}>Send</button>
