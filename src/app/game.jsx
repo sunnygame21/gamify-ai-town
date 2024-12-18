@@ -10,6 +10,7 @@ import DialogBox from "@/components/game/components/dialog";
 import { calculateGameSize } from "@/components/game/utils";
 import GameHint from "@/components/game/components/GameHint";
 import GameStartBox from "@/components/game/components/gameStartBox";
+import WalletBox from "@/components/game/components/walletBox";
 
 import "@/styles/App.css";
 
@@ -28,7 +29,7 @@ function Game() {
 
   const handleMessageIsDone = useCallback(() => {
     const customEvent = new CustomEvent(`${characterName}-dialog-finished`, {
-      detail: {},
+      detail: {}
     });
     window.dispatchEvent(customEvent);
   }, [characterName]);
@@ -49,30 +50,30 @@ function Game() {
         pixelArt: true,
         scale: {
           autoCenter: Phaser.Scale.CENTER_BOTH,
-          mode: Phaser.Scale.ENVELOP,
+          mode: Phaser.Scale.ENVELOP
         },
         scene: [BootScene, gameSceneRef.current],
         physics: {
-          default: "arcade",
+          default: "arcade"
         },
         dom: {
-          createContainer: true,
+          createContainer: true
         },
         plugins: {
           scene: [
             {
               key: "gridEngine",
               plugin: GridEngine,
-              mapping: "gridEngine",
+              mapping: "gridEngine"
             },
             {
               key: "rexUI",
               plugin: RexUIPlugin,
-              mapping: "rexUI",
-            },
-          ],
+              mapping: "rexUI"
+            }
+          ]
         },
-        backgroundColor: "#000000",
+        backgroundColor: "#000000"
       });
       window.phaserGame = gameRef.current;
     }
@@ -122,20 +123,23 @@ function Game() {
 
   return (
     <div>
+      <WalletBox />
       <div className="gameWrapper">
         <div
           id="game-content"
           className="gameContentWrapper"
-          style={{
-            // width: `${width * multiplier}px`,
-            // height: `${height * multiplier}px`,
-          }}
+          style={
+            {
+              // width: `${width * multiplier}px`,
+              // height: `${height * multiplier}px`,
+            }
+          }
         ></div>
         <GameHint
           gameSize={{
             width,
             height,
-            multiplier,
+            multiplier
           }}
           hintText={gameHintText}
         />
@@ -147,7 +151,7 @@ function Game() {
             gameSize={{
               width,
               height,
-              multiplier,
+              multiplier
             }}
           />
         ) : null}
