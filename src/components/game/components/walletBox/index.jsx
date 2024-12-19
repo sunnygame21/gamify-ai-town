@@ -3,8 +3,15 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { fetcher } from "@/utils/fetcher";
 import { useMemo, useState, useEffect, useCallback } from "react";
 import { decodeUTF8 } from "tweetnacl-util";
+import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import bs58 from "bs58";
 import useSWR from "swr";
+import LoginBtn from "../svgs/LoginBtn";
+import HelpBtn from "../svgs/HelpBtn";
+import WalletPanel from "./WalletPanel";
+import MemePanel from "./MemePanel";
+import PointPanel from "./PointPanel";
+import SolPanel from "./SolPanel";
 
 export default function WalletBox() {
   const { publicKey, disconnect, signMessage, connected } = useWallet();
@@ -87,27 +94,58 @@ export default function WalletBox() {
     });
   }, [disconnect, mutateProfile]);
 
+  const balance = useMemo(async () => {
+    // get sol balance
+    if (!publicKey) {
+      return 0;
+    }
+
+    const rawBalance = await connection.getBalance(publicKey);
+
+    return (rawBalance / LAMPORTS_PER_SOL).toFixed(2);
+  }, [publicKey, connection]);
+
   return (
-    <div className="absolute top-0 right-0">
+    <div className="absolute top-2 right-4 flex items-center space-x-8">
+      <button>
+        <HelpBtn />
+      </button>
       {(() => {
         switch (authenticated) {
           case "unconnected":
-            return <WalletMultiButton></WalletMultiButton>;
+            return (
+              <WalletMultiButton
+                style={{
+                  width: "145px",
+                  height: "36px",
+                  padding: "0",
+                  background: "none",
+                  border: "none"
+                }}
+              >
+                <LoginBtn />
+              </WalletMultiButton>
+            );
           case "unauthenticated":
-            return <span className="">Loging in...</span>;
+            return <span className="font-kemco text-white">Loging in...</span>;
           case "loading":
-            return <span className="">Connecting...</span>;
+            return <span className="font-kemco text-white">Connecting...</span>;
           case "logged":
             return (
               <>
-                <WalletMultiButton></WalletMultiButton>
-                <div className="bg-white rounded-md p-2 space-y-2">
-                  <p>Name: {profile.name}</p>
+                <SolPanel sol={balance} />
+                <PointPanel point={profile.point} />
+                <MemePanel meme={profile.meme} />
+                <WalletPanel wallet={publicKey.toBase58()} />
+                <div className="space-y-2">
                   <button
-                    className="underline hover:text-red-500"
+                    className="font-kemco text-[#221E22] relative"
                     onClick={handleLogout}
                   >
                     Logout
+                    <span className="font-kemco text-white absolute -top-[2px] -left-[2px]">
+                      Logout
+                    </span>
                   </button>
                 </div>
               </>

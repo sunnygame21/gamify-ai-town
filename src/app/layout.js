@@ -6,10 +6,16 @@ const geistSans = localFont({
   variable: "--font-geist-sans",
   weight: "100 900"
 });
+
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900"
+});
+
+const KemcoPixel = localFont({
+  src: "./fonts/KemcoPixelBold.ttf",
+  variable: "--font-kemco-pixel"
 });
 
 export const metadata = {
@@ -21,7 +27,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${KemcoPixel.variable} antialiased`}
       >
         {children}
       </body>
