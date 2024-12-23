@@ -4,7 +4,6 @@ A simple ai town to demo how easy to integrate adventure game with RPGGO API V2
 ![1280X1280](https://github.com/user-attachments/assets/eec02e09-d24b-4e5b-93ff-e9e3d146358f)
 
 
-
 ## 📖 Brief
 If you're dreaming of making your own AI-powered town-building game, well, you'll need more than just game dev skills. You'll also have to tackle some seriously brainy AI challenges, like auto-generating storylines, managing memory stacks, handling NPC interactions, and dealing with memory systems—basically, all the techy stuff that turns solo game development into a next-level boss fight!
 
